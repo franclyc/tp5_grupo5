@@ -1,36 +1,39 @@
 package ar.edu.unju.escmi.tp5.dominio;
 
-public class ClienteMayorista extends Cliente {
+public class ClienteMayorista extends Clientes {
 
-    private int codigoCliente;
+    private int codCliente;
 
     public ClienteMayorista() {
         super();
     }
 
-    public ClienteMayorista(int dni, String nombre, String apellido,
-            String direccion, int codigoCliente) {
-
-        super(dni, nombre, apellido, direccion);
-        this.codigoCliente = codigoCliente;
+    public ClienteMayorista(String direccion, String nombre, String apellido,
+                            String contrasenia, int codCliente) {
+        super(direccion, nombre, apellido, contrasenia);
+        this.codCliente = codCliente;
     }
 
-    public int getCodigoCliente() {
-        return codigoCliente;
+    private int obtenerCodCliente() {
+        return codCliente;
     }
 
-    public void setCodigoCliente(int codigoCliente) {
-        this.codigoCliente = codigoCliente;
+    public int getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(int codCliente) {
+        this.codCliente = codCliente;
     }
 
     @Override
     public String toString() {
         return "ClienteMayorista{" +
-                "dni=" + getDni() +
-                ", nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", direccion='" + getDireccion() + '\'' +
-                ", codigoCliente=" + codigoCliente +
+                "codCliente=" + codCliente +
+                ", direccion='" + direccion + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
                 '}';
     }
 }

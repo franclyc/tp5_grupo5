@@ -3,81 +3,90 @@ package ar.edu.unju.escmi.tp5.collections;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.unju.escmi.tp5.dominio.Cliente;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
+import ar.edu.unju.escmi.tp5.dominio.Clientes;
 
 public class CollectionCliente {
 
-    public static List<Cliente> clientes = new ArrayList<>();
+    public static List<Clientes> Clientes = new ArrayList<>();
 
-    static {
-        cargarClientes();
+    public static boolean autenticacion(int cod, String contrasenia) {
+
+        for (Clientes cliente : Clientes) {
+
+            int codigoCliente = 0;
+
+            if (cliente instanceof ClienteMayorista) {
+                codigoCliente = ((ClienteMayorista) cliente).getCodCliente();
+            } else if (cliente instanceof ClienteMinorista) {
+                codigoCliente = ((ClienteMinorista) cliente).getDni();
+            }
+
+            if (codigoCliente == cod &&
+                    cliente.getContrasenia().equals(contrasenia)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public static void cargarClientes() {
+    public static void precargarCliente() {
 
-        clientes.add(
-                new ClienteMayorista(
-                        20310458,
-                        "Juan",
-                        "Perez",
-                        "Av. Belgrano 125",
-                        1001
-                )
-        );
+        Clientes.clear();
 
-        clientes.add(
-                new ClienteMayorista(
-                        25456789,
-                        "Carlos",
-                        "Gomez",
-                        "Calle Alvear 450",
-                        1002
-                )
-        );
+        Clientes.add(new ClienteMayorista(
+                "Av. Belgrano 123",
+                "Juan",
+                "Perez",
+                "1234",
+                1001
+        ));
 
-        clientes.add(
-                new ClienteMinorista(
-                        30123456,
-                        "Maria",
-                        "Lopez",
-                        "Calle Lavalle 320",
-                        true
-                )
-        );
+        Clientes.add(new ClienteMinorista(
+                "San Martin 456",
+                "Maria",
+                "Gomez",
+                "5678",
+                20310458,
+                true
+        ));
 
-        clientes.add(
-                new ClienteMinorista(
-                        35456789,
-                        "Ana",
-                        "Martinez",
-                        "Calle Güemes 780",
-                        false
-                )
-        );
+        Clientes.add(new ClienteMinorista(
+                "Alvear 789",
+                "Carlos",
+                "Lopez",
+                "abcd",
+                25123456,
+                false
+        ));
     }
 
-    public static void agregarCliente(Cliente cliente) {
-        clientes.add(cliente);
-    }
+    public static Clientes buscarCliente(int cod) {
 
-    public static Cliente buscarClientePorDni(int dni) {
+        for (Clientes cliente : Clientes) {
 
-        for (Cliente cliente : clientes) {
+            if (cliente instanceof ClienteMayorista) {
 
-            if (cliente.getDni() == dni) {
-                return cliente;
+                ClienteMayorista mayorista =
+                        (ClienteMayorista) cliente;
+
+                if (mayorista.getCodCliente() == cod) {
+                    return mayorista;
+                }
+
+            } else if (cliente instanceof ClienteMinorista) {
+
+                ClienteMinorista minorista =
+                        (ClienteMinorista) cliente;
+
+                if (minorista.getDni() == cod) {
+                    return minorista;
+                }
             }
         }
 
         return null;
-    }
-
-    public static void mostrarClientes() {
-
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente);
-        }
     }
 }

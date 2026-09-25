@@ -1,22 +1,23 @@
 package ar.edu.unju.escmi.tp5.dominio;
 
-public class Producto {
+public class Productos {
 
     private int codigo;
     private String descripcion;
     private double precioUnitario;
-    private double descuento;
+    private int descuento;
+    private int stock;
 
-    public Producto() {
+    public Productos() {
     }
 
-    public Producto(int codigo, String descripcion,
-            double precioUnitario, double descuento) {
-
+    public Productos(int codigo, String descripcion, double precioUnitario,
+                     int descuento, int stock) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.precioUnitario = precioUnitario;
         this.descuento = descuento;
+        this.stock = stock;
     }
 
     public int getCodigo() {
@@ -43,21 +44,30 @@ public class Producto {
         this.precioUnitario = precioUnitario;
     }
 
-    public double getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(double descuento) {
+    public void setDescuento(int descuento) {
         this.descuento = descuento;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     @Override
     public String toString() {
-        return "Producto{" +
+        return "Productos{" +
                 "codigo=" + codigo +
                 ", descripcion='" + descripcion + '\'' +
                 ", precioUnitario=" + precioUnitario +
-                ", descuento=" + descuento + "%" +
+                ", descuento=" + descuento +
+                ", stock=" + stock +
                 '}';
     }
 }

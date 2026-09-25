@@ -1,36 +1,50 @@
 package ar.edu.unju.escmi.tp5.dominio;
 
-public class ClienteMinorista extends Cliente {
+public class ClienteMinorista extends Clientes {
 
-    private boolean obraSocialPAMI;
+    private int dni;
+    private boolean tienePami;
 
     public ClienteMinorista() {
         super();
     }
 
-    public ClienteMinorista(int dni, String nombre, String apellido,
-            String direccion, boolean obraSocialPAMI) {
-
-        super(dni, nombre, apellido, direccion);
-        this.obraSocialPAMI = obraSocialPAMI;
+    public ClienteMinorista(String direccion, String nombre, String apellido,
+                            String contrasenia, int dni, boolean tienePami) {
+        super(direccion, nombre, apellido, contrasenia);
+        this.dni = dni;
+        this.tienePami = tienePami;
     }
 
-    public boolean isObraSocialPAMI() {
-        return obraSocialPAMI;
+    private int obtenerCodCliente() {
+        return dni;
     }
 
-    public void setObraSocialPAMI(boolean obraSocialPAMI) {
-        this.obraSocialPAMI = obraSocialPAMI;
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    public boolean isTienePami() {
+        return tienePami;
+    }
+
+    public void setTienePami(boolean tienePami) {
+        this.tienePami = tienePami;
     }
 
     @Override
     public String toString() {
         return "ClienteMinorista{" +
-                "dni=" + getDni() +
-                ", nombre='" + getNombre() + '\'' +
-                ", apellido='" + getApellido() + '\'' +
-                ", direccion='" + getDireccion() + '\'' +
-                ", obraSocialPAMI=" + obraSocialPAMI +
+                "dni=" + dni +
+                ", tienePami=" + tienePami +
+                ", direccion='" + direccion + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
                 '}';
     }
 }

@@ -3,22 +3,30 @@ package ar.edu.unju.escmi.tp5.collections;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.unju.escmi.tp5.dominio.Producto;
+import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
+import ar.edu.unju.escmi.tp5.dominio.Clientes;
+import ar.edu.unju.escmi.tp5.dominio.Productos;
 
 public class CollectionProducto {
 
-    public static List<Producto> productos = new ArrayList<>();
+    public static List<Productos> Productos = new ArrayList<>();
 
-    public static void agregarProducto(Producto producto) {
+    public static int verificarStock(int cod) {
 
-        productos.add(producto);
+        Productos producto = buscar(cod);
+
+        if (producto != null) {
+            return producto.getStock();
+        }
+
+        return 0;
     }
 
-    public static Producto buscarProductoPorCodigo(int codigo) {
+    public static Productos buscar(int codProducto) {
 
-        for (Producto producto : productos) {
+        for (Productos producto : Productos) {
 
-            if (producto.getCodigo() == codigo) {
+            if (producto.getCodigo() == codProducto) {
                 return producto;
             }
         }
@@ -26,10 +34,38 @@ public class CollectionProducto {
         return null;
     }
 
-    public static void mostrarProductos() {
+    public static void agregar(Productos p) {
 
-        for (Producto producto : productos) {
-            System.out.println(producto);
+        if (p == null) {
+            return;
         }
+
+        if (buscar(p.getCodigo()) == null) {
+            Productos.add(p);
+        }
+    }
+
+    public static boolean comprobarStockVenta(
+            Clientes c, Productos p, int cantidad) {
+
+        if (c == null || p == null || cantidad <= 0) {
+            return false;
+        }
+
+        if (buscar(p.getCodigo()) == null) {
+            return false;
+        }
+
+        if (p.getStock() < cantidad) {
+            return false;
+        }
+
+        if (c instanceof ClienteMayorista) {
+            if (cantidad % 10 != 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

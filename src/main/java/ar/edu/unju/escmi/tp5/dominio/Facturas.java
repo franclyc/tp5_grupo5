@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
-import ar.edu.unju.escmi.tp5.collections.CollectionStock;
 
 public class Facturas {
 
@@ -15,6 +14,7 @@ public class Facturas {
     private LocalDate fecha;
     private double total;
     private Clientes cliente;
+    private boolean presentoDni;
     private List<Detalles> detalles = new ArrayList<>();
 
     public Facturas() {
@@ -24,24 +24,43 @@ public class Facturas {
         this.nroFactura = nroFactura;
         this.fecha = fecha;
         this.cliente = cliente;
+        this.presentoDni = false;
     }
 
+    public Facturas(int nroFactura, LocalDate fecha, Clientes cliente, boolean presentoDni) {
+        this.nroFactura = nroFactura;
+        this.fecha = fecha;
+        this.cliente = cliente;
+        this.presentoDni = presentoDni;
+    }
+
+   .
     public boolean agregarDetalle(Productos p, int cantidad) {
-
-        if (!CollectionProducto.comprobarStockVenta(cliente, p, cantidad)) {
+        Productos producto = CollectionProducto.buscar(p.getCodigo());
+        if (producto == null) {
             return false;
         }
 
-        double precio = p.getPrecioUnitario();
+       
+        int unidadesReales = cantidad;
         if (cliente instanceof ClienteMayorista) {
-            precio = precio / 2;
+            unidadesReales = cantidad * 10;
         }
 
-        if (!CollectionStock.descontar(p.getCodigo(), cantidad)) {
+        if (!CollectionProducto.comprobarStockVenta(cliente, producto, unidadesReales)) {
             return false;
         }
 
-        detalles.add(new Detalles(p, cantidad, precio));
+        double precio = producto.getPrecioUnitario();
+        if (cliente instanceof ClienteMayorista) {
+            precio = precio / 2.0;
+        }
+
+        if (!CollectionProducto.descontarStock(producto.getCodigo(), unidadesReales)) {
+            return false;
+        }
+
+        detalles.add(new Detalles(producto, unidadesReales, precio));
         calcularTotal();
         return true;
     }
@@ -52,8 +71,11 @@ public class Facturas {
             suma += d.calcularSubtotal();
         }
 
-        if (cliente instanceof ClienteMinorista && ((ClienteMinorista) cliente).isTienePami()) {
-            suma = suma - (suma * DESCUENTO_PAMI);
+        if (cliente instanceof ClienteMinorista) {
+            ClienteMinorista minorista = (ClienteMinorista) cliente;
+            if (presentoDni && minorista.isTienePami()) {
+                suma -= suma * DESCUENTO_PAMI;
+            }
         }
 
         total = suma;
@@ -85,11 +107,22 @@ public class Facturas {
     }
 
     public void setCliente(Clientes cliente) {
+        if (!detalles.isEmpty()) {
+            return;
+        }
         this.cliente = cliente;
     }
 
+    public boolean isPresentoDni() {
+        return presentoDni;
+    }
+
+    public void setPresentoDni(boolean presentoDni) {
+        this.presentoDni = presentoDni;
+    }
+
     public List<Detalles> getDetalles() {
-        return detalles;
+        return new ArrayList<>(detalles);
     }
 
     @Override

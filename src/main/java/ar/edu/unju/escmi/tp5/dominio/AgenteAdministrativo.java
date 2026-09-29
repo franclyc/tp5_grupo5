@@ -2,6 +2,8 @@ package ar.edu.unju.escmi.tp5.dominio;
 
 import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
 import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
+   import java.util.HashMap;
+   import java.util.Map;
 
 public class AgenteAdministrativo extends Empleados {
 
@@ -42,9 +44,20 @@ public class AgenteAdministrativo extends Empleados {
         return false;
     }
 
-        for (Detalles d : factura.getDetalles()) {
-        CollectionProducto.descontarStock(d.getProducto().getCodigo(), d.getCantidad());
-    }
+       Map<Integer, Integer> necesario = new HashMap<>();
+       for (Detalles d : factura.getDetalles()) {
+           necesario.merge(d.getProducto().getCodigo(), d.getCantidad(), Integer::sum);
+       }
+       for (Map.Entry<Integer, Integer> e : necesario.entrySet()) {
+           if (CollectionProducto.verificarStock(e.getKey()) < e.getValue()) {
+               System.out.println("Stock insuficiente para el producto " + e.getKey() + ". Venta cancelada.");
+               return false;
+           }
+       }
+
+       for (Detalles d : factura.getDetalles()) {
+           CollectionProducto.descontarStock(d.getProducto().getCodigo(), d.getCantidad());
+       }
 
     CollectionFactura.agregar(factura);
     System.out.println("Venta realizada correctamente.");

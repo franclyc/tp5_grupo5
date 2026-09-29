@@ -16,7 +16,8 @@ public class ClienteMinorista extends Clientes {
         this.tienePami = tienePami;
     }
 
-    private int obtenerCodCliente() {
+    @Override
+    public int obtenerCodCliente() {
         return dni;
     }
 
@@ -44,7 +45,6 @@ public class ClienteMinorista extends Clientes {
                 ", direccion='" + direccion + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
+                '}'; 
     }
 }

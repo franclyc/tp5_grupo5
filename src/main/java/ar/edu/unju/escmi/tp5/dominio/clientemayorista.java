@@ -14,7 +14,8 @@ public class ClienteMayorista extends Clientes {
         this.codCliente = codCliente;
     }
 
-    private int obtenerCodCliente() {
+    @Override
+    public int obtenerCodCliente() {
         return codCliente;
     }
 
@@ -33,7 +34,6 @@ public class ClienteMayorista extends Clientes {
                 ", direccion='" + direccion + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
+                '}'; 
     }
 }

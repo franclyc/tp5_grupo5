@@ -1,8 +1,5 @@
 package ar.edu.unju.escmi.tp5.principal;
 
-import java.time.LocalDate;
-import java.util.Scanner;
-
 import ar.edu.unju.escmi.tp5.collections.CollectionCliente;
 import ar.edu.unju.escmi.tp5.collections.CollectionEmpleados;
 import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
@@ -13,6 +10,8 @@ import ar.edu.unju.escmi.tp5.dominio.Empleados;
 import ar.edu.unju.escmi.tp5.dominio.EncargadoVentas;
 import ar.edu.unju.escmi.tp5.dominio.Facturas;
 import ar.edu.unju.escmi.tp5.dominio.Productos;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Principal {
 

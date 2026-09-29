@@ -27,13 +27,24 @@ public class AgenteAdministrativo extends Empleados {
     }
 
     public void realizarVenta(Facturas factura) {
-        if (factura == null) {
-            System.out.println("La factura no es valida");
-            return;
-        }
-        CollectionFactura.agregar(factura);
-        System.out.println("Venta realizada correctamente");
+    if (factura == null || factura.getCliente() == null) {
+        System.out.println("La factura debe tener un cliente.");
+        return;
     }
+
+    if (factura.getDetalles().isEmpty()) {
+        System.out.println("La factura debe tener al menos un producto.");
+        return;
+    }
+
+    if (CollectionFactura.buscar(factura.getNroFactura()) != null) {
+        System.out.println("Ya existe una factura con ese numero.");
+        return;
+    }
+
+    CollectionFactura.agregar(factura);
+    System.out.println("Venta realizada correctamente.");
+}
 
     @Override
     public String toString() {

@@ -72,3 +72,4 @@ public abstract class Clientes {
                 ", apellido='" + apellido + '\'' +
                 '}'; 
 }
+}

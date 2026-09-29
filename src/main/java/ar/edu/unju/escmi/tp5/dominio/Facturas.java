@@ -1,10 +1,9 @@
 package ar.edu.unju.escmi.tp5.dominio;
 
+import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
 
 public class Facturas {
 
@@ -34,7 +33,7 @@ public class Facturas {
         this.presentoDni = presentoDni;
     }
 
-   .
+   
     public boolean agregarDetalle(Productos p, int cantidad) {
         Productos producto = CollectionProducto.buscar(p.getCodigo());
         if (producto == null) {

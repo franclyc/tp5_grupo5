@@ -2,7 +2,7 @@ package ar.edu.unju.escmi.tp5.dominio;
 
 import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 
-public class Clientes {
+public abstract class Clientes {
 
     protected String direccion;
     protected String nombre;
@@ -19,13 +19,18 @@ public class Clientes {
         this.contrasenia = contrasenia;
     }
 
-    public Object buscarFactura(int nroFactura) {
-        return CollectionFactura.buscar(nroFactura);
+    //correccion donde cambiamos buscar factura fijate ricci
+    public Facturas buscarFactura(int nroFactura) {
+        Facturas factura = CollectionFactura.buscar(nroFactura); 
+
+        if (factura != null && factura.getCliente() == this) {   
+            return factura;
+        }
+
+        return null;                                             
     }
 
-    private int obtenerCodCliente() {
-        return 0;
-    }
+    public abstract int obtenerCodCliente();
 
     public String getDireccion() {
         return direccion;
@@ -65,10 +70,5 @@ public class Clientes {
                 "direccion='" + direccion + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
-    }
+                '}'; 
 }
-
-
-// IMPORTANTE : Una vez se haga Facturas.java cambiar "public Object buscarFactura(int nroFactura)" por "public Facturas buscarFactura(int nroFactura)" y agregar el import corrponiente

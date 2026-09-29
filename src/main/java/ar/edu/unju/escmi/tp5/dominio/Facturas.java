@@ -34,36 +34,30 @@ public class Facturas {
     }
 
    
-    public boolean agregarDetalle(Productos p, int cantidad) {
-        Productos producto = CollectionProducto.buscar(p.getCodigo());
-        if (producto == null) {
-            return false;
-        }
-
-       
-        int unidadesReales = cantidad;
-        if (cliente instanceof ClienteMayorista) {
-            unidadesReales = cantidad * 10;
-        }
-
-        if (!CollectionProducto.comprobarStockVenta(cliente, producto, unidadesReales)) {
-            return false;
-        }
-
-        double precio = producto.getPrecioUnitario();
-        if (cliente instanceof ClienteMayorista) {
-            precio = precio / 2.0;
-        }
-
-        if (!CollectionProducto.descontarStock(producto.getCodigo(), unidadesReales)) {
-            return false;
-        }
-
-        detalles.add(new Detalles(producto, unidadesReales, precio));
-        calcularTotal();
-        return true;
+public boolean agregarDetalle(Productos p, int cantidad) {
+    if (p == null || cliente == null || cantidad <= 0) {
+        return false;
     }
 
+    Productos producto = CollectionProducto.buscar(p.getCodigo());
+    if (producto == null) {
+        return false;
+    }
+
+    int unidadesReales = cantidad;
+    if (cliente instanceof ClienteMayorista) {
+        unidadesReales = cantidad * 10;
+    }
+
+    double precio = producto.getPrecioUnitario();
+    if (cliente instanceof ClienteMayorista) {
+        precio = precio / 2.0;
+    }
+
+    detalles.add(new Detalles(producto, unidadesReales, precio));
+    calcularTotal();
+    return true;
+}
     public double calcularTotal() {
         double suma = 0;
         for (Detalles d : detalles) {
@@ -117,8 +111,9 @@ public class Facturas {
     }
 
     public void setPresentoDni(boolean presentoDni) {
-        this.presentoDni = presentoDni;
-    }
+    this.presentoDni = presentoDni;
+    calcularTotal();
+}
 
     public List<Detalles> getDetalles() {
         return new ArrayList<>(detalles);

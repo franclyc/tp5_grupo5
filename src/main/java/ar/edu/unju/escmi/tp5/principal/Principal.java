@@ -12,6 +12,7 @@ import ar.edu.unju.escmi.tp5.dominio.Facturas;
 import ar.edu.unju.escmi.tp5.dominio.Productos;
 import java.time.LocalDate;
 import java.util.Scanner;
+import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
 
 public class Principal {
 
@@ -202,6 +203,15 @@ public class Principal {
 
         Facturas factura = new Facturas();
         factura.setCliente(cliente);
+
+        if (cliente instanceof ClienteMinorista) {
+    ClienteMinorista minorista = (ClienteMinorista) cliente;
+
+    if (minorista.isTienePami()) {
+        System.out.print("¿Presentó DNI? (s/n): ");
+        factura.setPresentoDni(sc.nextLine().trim().equalsIgnoreCase("s"));
+    }
+}
         factura.setFecha(LocalDate.now());
 
         boolean hayDetalle = false;

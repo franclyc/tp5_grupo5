@@ -19,7 +19,6 @@ public abstract class Clientes {
         this.contrasenia = contrasenia;
     }
 
-    //correccion donde cambiamos buscar factura fijate ricci
     public Facturas buscarFactura(int nroFactura) {
         Facturas factura = CollectionFactura.buscar(nroFactura); 
 

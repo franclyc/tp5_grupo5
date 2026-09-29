@@ -5,13 +5,14 @@ import ar.edu.unju.escmi.tp5.collections.CollectionEmpleados;
 import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
 import ar.edu.unju.escmi.tp5.dominio.AgenteAdministrativo;
+import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
 import ar.edu.unju.escmi.tp5.dominio.Clientes;
 import ar.edu.unju.escmi.tp5.dominio.Empleados;
 import ar.edu.unju.escmi.tp5.dominio.EncargadoVentas;
 import ar.edu.unju.escmi.tp5.dominio.Facturas;
 import ar.edu.unju.escmi.tp5.dominio.Productos;
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.util.Scanner; 
 import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
 
 public class Principal {
@@ -76,7 +77,7 @@ public class Principal {
             switch (opcion) {
                 case 1:
                     int nroFactura = leerEntero("Numero de factura: ");
-                    Object factura = cliente.buscarFactura(nroFactura);
+                    Facturas factura = cliente.buscarFactura(nroFactura);
                     if (factura != null) {
                         System.out.println(factura);
                     } else {
@@ -224,13 +225,15 @@ public class Principal {
             if (producto == null) {
                 System.out.println("No existe un producto con el codigo " + codProducto);
             } else {
+                                 System.out.println(cliente instanceof ClienteMayorista
+                           ? "Ingrese cantidad de bultos (10 unidades cada uno)"
+                           : "Ingrese cantidad de unidades");
                 int cantidad = leerEntero("Cantidad: ");
                 if (factura.agregarDetalle(producto, cantidad)) {
                     hayDetalle = true;
                     System.out.println("Producto agregado a la venta");
                 } else {
-                    System.out.println("No se pudo agregar el producto (stock insuficiente, cantidad invalida o, si es mayorista, no es multiplo de 10)");
-                }
+                System.out.println("No se pudo agregar el producto. Verifique la cantidad y el stock.");}
             }
 
             System.out.print("Desea agregar otro producto? (s/n): ");
@@ -239,8 +242,9 @@ public class Principal {
 
         if (hayDetalle) {
             factura.setNroFactura(CollectionFactura.siguienteNumero());
-            agente.realizarVenta(factura);
-            System.out.println(factura);
+                           if (agente.realizarVenta(factura)) {
+                   System.out.println(factura);
+               }
         } else {
             System.out.println("Venta cancelada, no se cargo ningun producto");
         }

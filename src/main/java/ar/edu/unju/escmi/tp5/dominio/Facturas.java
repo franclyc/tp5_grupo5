@@ -44,14 +44,21 @@ public boolean agregarDetalle(Productos p, int cantidad) {
         return false;
     }
 
-    int unidadesReales = cantidad;
-    if (cliente instanceof ClienteMayorista) {
-        unidadesReales = cantidad * 10;
-    }
-
+        int unidadesReales = cantidad;
     double precio = producto.getPrecioUnitario();
     if (cliente instanceof ClienteMayorista) {
+        unidadesReales = cantidad * 10;
         precio = precio / 2.0;
+    }
+
+    int yaEnFactura = 0;
+    for (Detalles d : detalles) {
+        if (d.getProducto().getCodigo() == producto.getCodigo()) {
+            yaEnFactura += d.getCantidad();
+        }
+    }
+    if (!CollectionProducto.comprobarStockVenta(cliente, producto, yaEnFactura + unidadesReales)) {
+        return false;
     }
 
     detalles.add(new Detalles(producto, unidadesReales, precio));

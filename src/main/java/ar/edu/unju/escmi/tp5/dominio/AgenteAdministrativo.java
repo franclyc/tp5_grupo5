@@ -32,7 +32,7 @@ public class AgenteAdministrativo extends Empleados {
         return;
     }
 
-    if (factura.getDetalles().isEmpty()) {
+    if (factura.getDetalles() == null || factura.getDetalles().isEmpty()) {
         System.out.println("La factura debe tener al menos un producto.");
         return;
     }

@@ -1,11 +1,10 @@
 package ar.edu.unju.escmi.tp5.collections;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ar.edu.unju.escmi.tp5.dominio.ClienteMayorista;
 import ar.edu.unju.escmi.tp5.dominio.ClienteMinorista;
 import ar.edu.unju.escmi.tp5.dominio.Clientes;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionCliente {
 
@@ -13,23 +12,11 @@ public class CollectionCliente {
 
     public static boolean autenticacion(int cod, String contrasenia) {
 
-        for (Clientes cliente : Clientes) {
+        Clientes cliente = buscarCliente(cod);
 
-            int codigoCliente = 0;
-
-            if (cliente instanceof ClienteMayorista) {
-                codigoCliente = ((ClienteMayorista) cliente).getCodCliente();
-            } else if (cliente instanceof ClienteMinorista) {
-                codigoCliente = ((ClienteMinorista) cliente).getDni();
-            }
-
-            if (codigoCliente == cod &&
-                    cliente.getContrasenia().equals(contrasenia)) {
-                return true;
-            }
-        }
-
-        return false;
+        return cliente != null
+                && cliente.getContrasenia() != null
+                && cliente.getContrasenia().equals(contrasenia);
     }
 
     public static void precargarCliente() {
@@ -67,23 +54,8 @@ public class CollectionCliente {
 
         for (Clientes cliente : Clientes) {
 
-            if (cliente instanceof ClienteMayorista) {
-
-                ClienteMayorista mayorista =
-                        (ClienteMayorista) cliente;
-
-                if (mayorista.getCodCliente() == cod) {
-                    return mayorista;
-                }
-
-            } else if (cliente instanceof ClienteMinorista) {
-
-                ClienteMinorista minorista =
-                        (ClienteMinorista) cliente;
-
-                if (minorista.getDni() == cod) {
-                    return minorista;
-                }
+            if (cliente.obtenerCodCliente() == cod) {
+                return cliente;
             }
         }
 

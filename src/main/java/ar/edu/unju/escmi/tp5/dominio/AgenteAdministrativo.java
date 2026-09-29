@@ -1,7 +1,7 @@
 package ar.edu.unju.escmi.tp5.dominio;
 
-import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 import ar.edu.unju.escmi.tp5.collections.CollectionProducto;
+import ar.edu.unju.escmi.tp5.collections.CollectionFactura;
 
 public class AgenteAdministrativo extends Empleados {
 
